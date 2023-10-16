@@ -1,0 +1,367 @@
+openapi: '3.0.2'
+info:
+  title: Httprouter Crud Notes API
+  version: '1.0'
+servers:
+  - url: https://127.0.0.1:8000/api
+components:
+  schemas:
+    Category:
+      type: object
+      properties:
+        id:
+          type: integer
+          default: 1
+        name:
+          type: string
+          default: Category A      
+    CategoryCreateResponse:
+      type: object
+      properties:
+        id:
+          type: integer
+          default: 2
+        name:
+          type: string
+          default: Category B
+    CategoryUpdateResponse:
+      type: object
+      properties:
+        id:
+          type: integer
+          default: 1
+        name:
+          type: string
+          default: Category aa
+    NoteListItem: 
+      type: object
+      properties:
+        id:
+          type: integer
+          default: 1
+        title: 
+          type: string
+          default: Title AA
+        category:
+          type: integer
+          default: "Category A"
+    Note: 
+      type: object
+      properties:
+        id:
+          type: integer
+          default: 1
+        title:
+          type: string
+          default: Title AA
+        body: 
+          type: string
+          default: Body AA
+        category:
+          type: string
+          default: Category A
+    NoteCreateRequest:
+      type: object
+      properties:
+        title:
+          type: string
+          default: Title BB
+        body:
+          type: string
+          default: Body BB
+        idCategory:
+          type: integer
+          default: 1
+    NoteCreateResponse:
+      type: object
+      properties:
+        title:
+          type: string
+          default: Title BB
+        body:
+          type: string
+          default: Body BB
+        category:
+          type: string
+          default: Category A
+    NoteUpdateRequest:
+      type: object
+      properties:
+        title:
+          type: string
+          default: Title aaaa
+        body:
+          type: string
+          default: Body aaaa
+        idCategory:
+          type: integer
+          default: 1
+    NoteUpdateResponse:
+      type: object
+      properties:
+        title:
+          type: string
+          default: Title aaaa
+        body:
+          type: string
+          default: Body aaaa
+        idCategory:
+          type: string
+          default: "Category A"
+paths:
+  /categories:
+    get:
+      responses:
+        '200':
+          description: Success to get all categories
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  code:
+                    type: integer
+                    default: 200
+                  status:
+                    type: string
+                    default: OK
+                  data:
+                    type: array
+                    items:
+                      $ref: "#/components/schemas/Category"
+    post: 
+      requestBody:
+        content:
+          application/json:
+            schema: 
+              type: object
+              properties:
+                name: 
+                  type: string
+                  default: Category B
+      responses:
+        '200':
+          description: Success to create a Category
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  code:
+                    type: integer
+                    default: 200
+                  status:
+                    type: string
+                    default: OK
+                  data:
+                    $ref: "#/components/schemas/CategoryCreateResponse"
+  /categories/{id}:
+    get:
+      parameters:
+        - in: path
+          name: id
+          description: id of category
+          schema:
+            type: integer
+            minimum: 1
+          required: true
+      responses:
+        '200':
+          description: Success getting a category
+          content:
+            application/json:
+              schema: 
+                type: object
+                properties:
+                  code:
+                    type: integer
+                    default: 200
+                  status:
+                    type: string
+                    default: OK
+                  data:
+                    $ref: "#/components/schemas/Category"
+    put: 
+      parameters:
+        - in: path
+          name: id
+          description: id of category
+          schema:
+            type: integer
+            minimum: 1
+          required: true
+      requestBody:
+        content:
+          application/json:
+            schema: 
+              type: object
+              properties:
+                name:
+                  type: string
+                  default: "Category aa"
+      responses:
+        '200':
+          description: Success to edit a category
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  code:
+                    type: integer
+                    default: 200
+                  status:
+                    type: string
+                    default: OK
+                  data:
+                    $ref: "#/components/schemas/CategoryUpdateResponse" 
+    delete:
+      parameters:
+        - in: path
+          name: id
+          description: id of category
+          schema:
+            type: integer
+            minimum: 1
+          required: true
+      responses:
+        '200':
+          description: Success deleting a category by id
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  code:
+                    type: integer
+                    default: 200
+                  status:
+                    type: string
+                    default: OK
+                  data:
+                    type: object
+  /notes:
+    get:
+      responses:
+          '200':
+            description: Success to get a list of Notes
+            content:
+              application/json:
+                schema:   
+                  type: object
+                  properties:
+                    code:
+                      type: integer
+                      default: 200
+                    status:
+                      type: string
+                      default: OK
+                    data:
+                      type: array
+                      items:
+                        $ref: "#/components/schemas/NoteListItem"
+    post:   
+      requestBody:
+        content:
+          application/json:
+            schema: 
+              $ref: "#/components/schemas/NoteCreateRequest"
+      responses:
+        '200':
+          description: Success to create a note
+          content:
+            application/json:
+              schema: 
+                type: object
+                properties:
+                  code:
+                    type: integer
+                    default: 200
+                  
+                  data:
+                    $ref: "#/components/schemas/NoteCreateResponse"
+              
+  /notes/{id}:
+    get:
+      parameters:
+        - in: path
+          name: id
+          description: id of note 
+          schema: 
+            type: integer
+            minimum: 1
+          required: true
+      responses:
+        '200':
+          description: Succes to get note by id
+          content:
+            application/json:
+              schema: 
+                type: object
+                properties:
+                  code:
+                    type: integer
+                    default: 200
+                  status:
+                    type: integer
+                    default: OK
+                  data:
+                    $ref: "#/components/schemas/Note"
+    put:
+      parameters:
+        - in: path
+          name: id
+          description: id of note 
+          schema: 
+            type: integer
+            minimum: 1
+          required: true
+      requestBody:
+        content:
+          application/json:
+            schema: 
+                $ref: "#/components/schemas/NoteUpdateRequest"
+      responses:
+        '200':
+          description: Succes to update a note 
+          content:
+            application/json:
+              schema: 
+                type: object
+                properties:
+                  code:
+                    type: integer
+                    default: 200
+                  status:
+                    type: integer
+                    default: OK
+                  data:
+                    $ref: "#/components/schemas/NoteUpdateResponse"
+    delete:
+      parameters:
+        - in: path
+          name: id
+          description: id of note
+          schema:
+            type: integer
+            minimum: 1
+          required: true
+      responses:
+        '200':
+          description: Success deleting a note by id
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  code:
+                    type: integer
+                    default: 200
+                  status:
+                    type: string
+                    default: OK
+                  data:
+                    type: object
+
+   
+
