@@ -18,7 +18,7 @@ Gorm will automatically migrate and seed the database. The testing database will
 ```
 go test -v ./test
 ```
-![image](https://github.com/naomigrain/httprouter-crud-notes/assets/113373725/2488a53e-3bf0-421c-be45-4faa2c87d66f)
+![image](https://github.com/naomigrain/echo-crud-notes/assets/113373725/6964f429-b16c-4377-9f08-a05d9c6821ad)
 
 ## **Structure**
 Based on repository pattern, this project use:
